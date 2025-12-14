@@ -1,0 +1,783 @@
+/* =========================================================
+   BASE THEME TOKENS
+   ========================================================= */
+
+:root {
+  --font-main: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --radius-card: 14px;
+  --radius-pill: 999px;
+  --transition-fast: 0.15s ease-out;
+}
+
+/* ---------- DARK THEME (default) ---------- */
+
+body.theme-dark {
+  --bg: #020617;
+  --bg-alt: #020617;
+  --bg-card: #020617;
+  --bg-card-soft: rgba(15, 23, 42, 0.96);
+  --accent: #22c55e;
+  --accent-soft: #16a34a;
+  --accent-warn: #eab308;
+  --accent-info: #38bdf8;
+  --text: #e5e7eb;
+  --text-muted: #9ca3af;
+  --border: #1f2937;
+  --danger: #f97373;
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.55);
+}
+
+/* ---------- LIGHT THEME ---------- */
+
+body.theme-light {
+  --bg: #f5f5f5;
+  --bg-alt: #ffffff;
+  --bg-card: #ffffff;
+  --bg-card-soft: #ffffff;
+  --accent: #16a34a;
+  --accent-soft: #22c55e;
+  --accent-warn: #eab308;
+  --accent-info: #0284c7;
+  --text: #0f172a;
+  --text-muted: #6b7280;
+  --border: #d4d4d8;
+  --danger: #ef4444;
+  --shadow-card: 0 8px 24px rgba(15, 23, 42, 0.12);
+}
+
+/* ---------- BUNNA (WARM) THEME ---------- */
+
+body.theme-bunna {
+  --bg: #1c130e;
+  --bg-alt: #24140a;
+  --bg-card: #24140a;
+  --bg-card-soft: rgba(32, 18, 9, 0.96);
+  --accent: #f59e0b;
+  --accent-soft: #fbbf24;
+  --accent-warn: #facc15;
+  --accent-info: #38bdf8;
+  --text: #fef3c7;
+  --text-muted: #e5e5e5b0;
+  --border: #4b2810;
+  --danger: #f97373;
+  --shadow-card: 0 18px 40px rgba(0, 0, 0, 0.7);
+}
+
+/* =========================================================
+   GLOBAL LAYOUT & TYPOGRAPHY
+   ========================================================= */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background:
+    radial-gradient(circle at top, #1e293b 0, var(--bg) 55%),
+    radial-gradient(circle at bottom, #111827 0, transparent 55%);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================================================
+   HEADER & NAV
+   ========================================================= */
+
+header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  background: rgba(15, 23, 42, 0.97);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  backdrop-filter: blur(12px);
+}
+
+body.theme-light header {
+  background: rgba(249, 250, 251, 0.96);
+}
+
+body.theme-bunna header {
+  background: rgba(24, 16, 9, 0.97);
+}
+
+.app-title h1 {
+  font-size: 18px;
+  margin: 0;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+.app-title small {
+  display: block;
+  color: var(--text-muted);
+  font-size: 11px;
+}
+
+nav {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+nav button {
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+nav button.active {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  color: #020617;
+  border-color: transparent;
+  font-weight: 600;
+}
+
+.header-actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* =========================================================
+   MAIN LAYOUT
+   ========================================================= */
+
+main {
+  padding: 16px;
+  max-width: 1080px;
+  width: 100%;
+  margin: 0 auto 32px;
+  flex: 1;
+}
+
+section {
+  display: none;
+}
+
+section.active {
+  display: block;
+}
+
+/* =========================================================
+   CARDS & COMMON ELEMENTS
+   ========================================================= */
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--bg-card-soft);
+  border-radius: var(--radius-card);
+  border: 1px solid var(--border);
+  padding: 14px 14px 12px;
+  box-shadow: var(--shadow-card);
+}
+
+.card h2 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card h3 {
+  margin: 6px 0 6px;
+  font-size: 14px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.chip {
+  font-size: 11px;
+  padding: 3px 7px;
+  border-radius: var(--radius-pill);
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.45);
+  color: var(--accent);
+}
+
+body.theme-light .chip {
+  background: rgba(34, 197, 94, 0.1);
+}
+
+body.theme-bunna .chip {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: rgba(245, 158, 11, 0.8);
+  color: var(--accent);
+}
+
+.muted {
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+.summary-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+  font-size: 12px;
+}
+
+.pill {
+  padding: 3px 8px;
+  border-radius: var(--radius-pill);
+  background: var(--bg-alt);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.pill strong {
+  color: var(--text);
+  margin-right: 3px;
+}
+
+.inputs-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.inputs-row label {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1 1 120px;
+}
+
+.block-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  display: block;
+  margin-top: 6px;
+}
+
+/* Forms */
+
+input[type="number"],
+input[type="date"],
+textarea,
+select {
+  background: var(--bg-alt);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 7px;
+  font-size: 12px;
+  font-family: var(--font-main);
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), color var(--transition-fast);
+}
+
+textarea {
+  min-height: 70px;
+  resize: vertical;
+}
+
+input[type="number"]:focus,
+input[type="date"]:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.3);
+}
+
+/* Buttons */
+
+button {
+  font-family: var(--font-main);
+}
+
+button.primary {
+  background: linear-gradient(135deg, var(--accent-soft), var(--accent));
+  color: #020617;
+  border: none;
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  font-size: 13px;
+  cursor: pointer;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), opacity var(--transition-fast);
+}
+
+button.primary:active {
+  transform: translateY(1px);
+}
+
+button.outline {
+  background: transparent;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 5px 10px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+button.outline.small {
+  padding: 4px 9px;
+  font-size: 11px;
+}
+
+button.outline:hover {
+  background: rgba(148, 163, 184, 0.12);
+}
+
+/* Segmented buttons (All vs Gym) */
+
+.segmented {
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  padding: 4px 10px;
+  font-size: 12px;
+  background: var(--bg-alt);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast), border-color var(--transition-fast);
+}
+
+.segmented.active {
+  background: var(--accent);
+  color: #020617;
+  border-color: var(--accent);
+  font-weight: 600;
+}
+
+/* Checkboxes */
+
+input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  accent-color: var(--accent);
+  margin-top: 2px;
+  cursor: pointer;
+}
+
+/* Checklists */
+
+.checklist {
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  max-height: 420px;
+  overflow: auto;
+}
+
+.checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 6px 4px;
+  border-bottom: 1px dashed rgba(31, 41, 55, 0.7);
+  font-size: 13px;
+}
+
+body.theme-light .checklist li {
+  border-bottom-color: rgba(209, 213, 219, 0.9);
+}
+
+.checklist li:last-child {
+  border-bottom: none;
+}
+
+.time-tag {
+  font-size: 11px;
+  color: var(--text-muted);
+  min-width: 52px;
+}
+
+.label-text {
+  flex: 1;
+}
+
+/* =========================================================
+   DASHBOARD SPECIFIC
+   ========================================================= */
+
+.today-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.today-text {
+  flex: 1 1 auto;
+}
+
+.day-progress {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  flex: 0 0 auto;
+}
+
+/* Progress ring */
+
+.progress-ring {
+  transform: rotate(-90deg);
+}
+
+.progress-ring__bg {
+  stroke: rgba(148, 163, 184, 0.35);
+}
+
+.progress-ring__value {
+  stroke: var(--accent);
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.4s ease-out, stroke 0.3s ease-out;
+}
+
+.day-progress-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.day-progress-label span {
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.day-progress-label small {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* Progress ring – good / bad colors (optional classes used by JS) */
+
+.day-progress.good .progress-ring__value {
+  stroke: var(--accent);
+}
+
+.day-progress.ok .progress-ring__value {
+  stroke: var(--accent-warn);
+}
+
+.day-progress.bad .progress-ring__value {
+  stroke: var(--danger);
+}
+
+/* View toggle */
+
+.view-toggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+/* Time blocks */
+
+.time-blocks {
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.time-block {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.9);
+  padding: 8px 8px 6px;
+}
+
+body.theme-light .time-block {
+  background: #f9fafb;
+}
+
+body.theme-bunna .time-block {
+  background: rgba(40, 24, 12, 0.95);
+}
+
+.time-block-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.time-block-header h3 {
+  margin: 0;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.time-block-progress {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 100px;
+}
+
+.time-block-bar {
+  flex: 1;
+  height: 5px;
+  border-radius: 999px;
+  background: rgba(31, 41, 55, 0.9);
+  overflow: hidden;
+}
+
+body.theme-light .time-block-bar {
+  background: #e5e7eb;
+}
+
+.time-block-bar > div {
+  height: 100%;
+  width: 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent-soft), var(--accent));
+  transition: width 0.25s ease-out;
+}
+
+.fine-print {
+  margin-top: 8px;
+}
+
+/* =========================================================
+   WEEKLY SUMMARY (Feature #4)
+   ========================================================= */
+
+.weekly-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.weekly-stat h3 {
+  margin: 0 0 3px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.weekly-stat p {
+  margin: 0;
+  font-size: 13px;
+}
+
+.weekly-stat strong {
+  font-size: 16px;
+}
+
+/* =========================================================
+   RATING BADGE (Coach card)
+   ========================================================= */
+
+.rating-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: var(--radius-pill);
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.rating-excellent {
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(34, 197, 94, 0.85);
+  color: #bbf7d0;
+}
+
+.rating-good {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.6);
+  color: #86efac;
+}
+
+.rating-normal {
+  background: rgba(148, 163, 184, 0.25);
+  border: 1px solid rgba(148, 163, 184, 0.9);
+  color: var(--text);
+}
+
+.rating-bad {
+  background: rgba(248, 113, 113, 0.14);
+  border: 1px solid rgba(239, 68, 68, 0.9);
+  color: #fecaca;
+}
+
+.rating-verybad {
+  background: rgba(239, 68, 68, 0.22);
+  border: 1px solid rgba(220, 38, 38, 1);
+  color: #fee2e2;
+}
+
+/* =========================================================
+   CALENDAR
+   ========================================================= */
+
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.calendar-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-top: 4px;
+}
+
+.calendar-grid .weekday {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text-muted);
+  padding-bottom: 4px;
+}
+
+.day-cell {
+  position: relative;
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 3px 4px;
+  cursor: pointer;
+  background: rgba(15, 23, 42, 0.9);
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), opacity var(--transition-fast), background var(--transition-fast);
+  overflow: hidden;
+}
+
+body.theme-light .day-cell {
+  background: #f9fafb;
+}
+
+body.theme-bunna .day-cell {
+  background: rgba(40, 24, 12, 0.95);
+}
+
+.day-cell .day-num {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.day-cell.day-full {
+  background: radial-gradient(circle at top, var(--accent), #14532d);
+  border-color: var(--accent);
+  color: #ecfdf5;
+}
+
+.day-cell.day-full .day-num {
+  color: #ecfdf5;
+  font-weight: 600;
+}
+
+.day-cell.day-full .x-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: rgba(15, 23, 42, 0.9);
+  pointer-events: none;
+}
+
+.day-cell.day-partial {
+  border-color: var(--accent-warn);
+  box-shadow: 0 0 0 1px rgba(234, 179, 8, 0.25);
+}
+
+.day-cell.day-empty {
+  opacity: 0.55;
+}
+
+.day-cell:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.6);
+}
+
+/* =========================================================
+   FOOD / GROCERY
+   ========================================================= */
+
+.import-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 768px) {
+  header {
+    align-items: flex-start;
+  }
+
+  .app-title h1 {
+    font-size: 15px;
+  }
+
+  main {
+    padding: 12px;
+  }
+
+  .card {
+    padding: 12px;
+  }
+
+  .today-header {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 520px) {
+  .today-header {
+    flex-direction: column;
+  }
+
+  .day-progress {
+    align-self: flex-end;
+  }
+}

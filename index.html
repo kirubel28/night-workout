@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Night Workout – 18‑Month Cut</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!-- PWA manifest + theme color -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#020617" />
+  <!-- Main CSS -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body class="theme-dark">
+<header>
+  <div class="app-title">
+    <h1>Night Workout – 18‑Month Cut</h1>
+    <small>Push / Pull / Legs / Upper / Lower • Road to ~8% BF</small>
+  </div>
+  <nav>
+    <button data-section="dashboard" class="active">Dashboard</button>
+    <button data-section="calendar">Calendar</button>
+    <button data-section="progress">Progress</button>
+    <button data-section="plan">Plan</button>
+    <button data-section="food">Food</button>
+    <button data-section="settings">Settings</button>
+  </nav>
+  <div class="header-actions">
+    <!-- Quick theme toggle -->
+    <button id="themeToggleBtn" class="outline small">Theme</button>
+  </div>
+</header>
+
+<main>
+  <!-- DASHBOARD -->
+  <section id="dashboard" class="active">
+    <div class="cards">
+
+      <!-- Left column: Today + progress ring + time blocks -->
+      <div class="card" id="todayCard">
+        <div class="today-header">
+          <div class="today-text">
+            <h2>
+              <span id="dayTitle">Today</span>
+              <span class="chip" id="dayTypeChip"></span>
+            </h2>
+            <div class="summary-row">
+              <div class="pill"><strong>Date</strong><span id="todayDateStr"></span></div>
+              <div class="pill"><strong>Goal</strong><span id="dayGoal"></span></div>
+            </div>
+          </div>
+
+          <!-- PROGRESS RING (Feature #1) -->
+          <div class="day-progress" id="dayProgress">
+            <svg class="progress-ring" width="80" height="80">
+              <circle
+                class="progress-ring__bg"
+                stroke-width="6"
+                cx="40" cy="40" r="32"
+                fill="transparent" />
+              <circle
+                class="progress-ring__value"
+                stroke-width="6"
+                cx="40" cy="40" r="32"
+                fill="transparent"
+                stroke-dasharray="201"
+                stroke-dashoffset="201" />
+            </svg>
+            <div class="day-progress-label">
+              <span id="dayProgressPercent">0%</span>
+              <small id="dayProgressSubtitle">completed</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Date / water / sleep inputs -->
+        <div class="inputs-row top-inputs">
+          <label>
+            Select day
+            <input type="date" id="datePicker">
+          </label>
+          <label>
+            Water today (L)
+            <input type="number" step="0.1" min="0" id="waterInput" placeholder="e.g. 3.5">
+          </label>
+          <label>
+            Sleep last night (h)
+            <input type="number" step="0.1" min="0" id="sleepInput" placeholder="e.g. 7.5">
+          </label>
+        </div>
+
+        <!-- ALL / GYM‑ONLY TOGGLE (Feature #3) -->
+        <div class="view-toggle">
+          <span class="muted">View:</span>
+          <button id="viewAllBtn" class="segmented active">All day</button>
+          <button id="viewGymBtn" class="segmented">Gym only</button>
+        </div>
+
+        <!-- TIME‑BLOCK GROUPING (Feature #2) -->
+        <div class="time-blocks">
+
+          <div class="time-block" data-block="morning">
+            <div class="time-block-header">
+              <h3>Morning (05:30–11:59)</h3>
+              <div class="time-block-progress">
+                <span id="morningProgressLabel" class="muted">0 / 0</span>
+                <div class="time-block-bar">
+                  <div id="morningProgressBar"></div>
+                </div>
+              </div>
+            </div>
+            <ul class="checklist" id="checklistMorning"></ul>
+          </div>
+
+          <div class="time-block" data-block="midday">
+            <div class="time-block-header">
+              <h3>Mid‑day (12:00–17:59)</h3>
+              <div class="time-block-progress">
+                <span id="middayProgressLabel" class="muted">0 / 0</span>
+                <div class="time-block-bar">
+                  <div id="middayProgressBar"></div>
+                </div>
+              </div>
+            </div>
+            <ul class="checklist" id="checklistMidday"></ul>
+          </div>
+
+          <div class="time-block" data-block="evening">
+            <div class="time-block-header">
+              <h3>Evening (18:00–23:00)</h3>
+              <div class="time-block-progress">
+                <span id="eveningProgressLabel" class="muted">0 / 0</span>
+                <div class="time-block-bar">
+                  <div id="eveningProgressBar"></div>
+                </div>
+              </div>
+            </div>
+            <ul class="checklist" id="checklistEvening"></ul>
+          </div>
+
+        </div>
+
+        <p class="muted fine-print">
+          Aim for ≥95% of tasks + water + sleep to get a full green “X” on the calendar.
+          Use “Gym only” view while training to see just exercises and pre/post‑workout tasks.
+        </p>
+      </div>
+
+      <!-- Right column: Daily targets + notes + coach card -->
+      <div class="card">
+        <h2>Daily Targets<span class="chip">Cut Phase</span></h2>
+        <p class="muted">
+          Based on your stats (24 y, 174.5 cm, ~76 kg, high activity).
+        </p>
+        <div class="summary-row">
+          <div class="pill"><strong>Calories</strong>≈ 2,200–2,400 kcal</div>
+          <div class="pill"><strong>Protein</strong>150–170 g</div>
+          <div class="pill"><strong>Fat</strong>45–60 g</div>
+          <div class="pill"><strong>Carbs</strong>Rest of calories</div>
+        </div>
+        <h3 style="margin-top:12px;">Hydration & Sleep</h3>
+        <ul class="checklist">
+          <li><span class="time-tag">All‑day</span><span class="label-text">Water target: <strong>3.5 L</strong> (7 × 500 ml bottles)</span></li>
+          <li><span class="time-tag">Night</span><span class="label-text">Sleep target: <strong>7–8 hours</strong> (phone airplane mode from 22:30).</span></li>
+        </ul>
+        <h3 style="margin-top:10px;">Notes for today</h3>
+        <textarea id="dayNotes" placeholder="Energy, hunger, training notes…"></textarea>
+      </div>
+
+      <div class="card" id="coachCard">
+        <h2>Coach Insights<span class="chip">Auto</span></h2>
+        <div id="ratingBadge" style="margin-bottom:6px;"></div>
+        <div id="coachContent" class="muted"></div>
+        <button class="outline" id="deloadBtn" style="margin-top:8px;">I did my deload this week</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- CALENDAR -->
+  <section id="calendar">
+    <div class="cards">
+      <div class="card">
+        <h2>Adherence Calendar<span class="chip">Big Picture</span></h2>
+        <div class="calendar-header">
+          <button class="outline" id="prevMonthBtn">◀</button>
+          <div class="calendar-title" id="calendarTitle"></div>
+          <button class="outline" id="nextMonthBtn">▶</button>
+        </div>
+        <div class="calendar-grid" id="calendarGrid"></div>
+        <p class="muted" style="margin-top:8px;">
+          <strong>X</strong> = full day done (all tasks + water + sleep). Yellow border = partial. Grey = missed. Click a day to jump to its checklist.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRESS -->
+  <section id="progress">
+    <div class="cards">
+      <div class="card">
+        <h2>Log Check‑In<span class="chip">Body & Feel</span></h2>
+        <div class="inputs-row">
+          <label>
+            Date
+            <input type="date" id="logDate">
+          </label>
+          <label>
+            Weight (kg)
+            <input type="number" id="logWeight" step="0.1" min="0" placeholder="e.g. 75.2">
+          </label>
+          <label>
+            Waist (cm, at navel – optional)
+            <input type="number" id="logWaist" step="0.1" min="0" placeholder="e.g. 82">
+          </label>
+        </div>
+        <div class="inputs-row">
+          <label>
+            Energy (1–10)
+            <input type="number" id="logEnergy" step="1" min="1" max="10" placeholder="7">
+          </label>
+          <label>
+            Hunger (1–10)
+            <input type="number" id="logHunger" step="1" min="1" max="10" placeholder="5">
+          </label>
+        </div>
+        <label class="block-label">
+          Notes
+          <textarea id="logNotes" placeholder="Training performance, mood, anything important…"></textarea>
+        </label>
+        <button class="primary" id="saveLogBtn">Save check‑in</button>
+      </div>
+
+      <div class="card">
+        <h2>Weight Trend<span class="chip">Visual</span></h2>
+        <canvas id="weightChart" height="180"></canvas>
+        <p class="muted">
+          Aim for <strong>0.4–0.7 kg loss per week</strong>. If weight stalls for 3 weeks, trim 150–200 kcal. If it drops too fast, add 150–200 kcal.
+        </p>
+      </div>
+
+      <!-- WEEKLY SUMMARY & STREAKS (Feature #4) -->
+      <div class="card" id="weeklySummaryCard" style="grid-column:1/-1;">
+        <h2>Weekly Summary<span class="chip">Last 7 Days</span></h2>
+        <div class="weekly-summary-grid">
+          <div class="weekly-stat">
+            <h3>Completion</h3>
+            <p><strong id="weeklyCompletionPct">0%</strong></p>
+            <p class="muted"><span id="weeklyFullDays">0</span> full days (X on calendar)</p>
+          </div>
+          <div class="weekly-stat">
+            <h3>Streak</h3>
+            <p><strong id="currentStreak">0 days</strong></p>
+            <p class="muted">Best streak: <span id="bestStreak">0</span> days</p>
+          </div>
+          <div class="weekly-stat">
+            <h3>Weight</h3>
+            <p><strong id="weeklyWeightChange">0.0 kg</strong></p>
+            <p class="muted">Change vs 7 days ago</p>
+          </div>
+          <div class="weekly-stat">
+            <h3>Recovery</h3>
+            <p><strong id="weeklyAvgSleep">0 h</strong></p>
+            <p class="muted">Avg water: <span id="weeklyAvgWater">0 L</span></p>
+          </div>
+        </div>
+        <p class="muted">
+          Use this card to judge the week, not just a single day. Goal: ≥5 full days, streak growing, and weight moving slowly in the right direction.
+        </p>
+      </div>
+
+      <div class="card" style="grid-column:1/-1;">
+        <h2>Check‑In History</h2>
+        <table id="logTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Weight (kg)</th>
+              <th>Waist (cm)</th>
+              <th>Energy</th>
+              <th>Hunger</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+          <!-- rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PLAN -->
+  <section id="plan">
+    <div class="cards">
+      <div class="card">
+        <h2>Program Rules<span class="chip">Read Once</span></h2>
+        <ul class="checklist">
+          <li><span class="time-tag">Training</span><span class="label-text">
+            <strong>Progressive overload:</strong> if you hit the top of the rep range on all sets for an exercise in <strong>2 workouts in a row</strong>, add a small amount of weight (1–2 kg) next time.
+          </span></li>
+          <li><span class="time-tag">Every 8–10 wks</span><span class="label-text">
+            <strong>Deload week:</strong> reduce weights to ~60–70% OR cut sets in half for one week. Use the Coach card + button to track deloads.
+          </span></li>
+          <li><span class="time-tag">Steps</span><span class="label-text">
+            <strong>7,000–10,000 steps</strong> every day (walks to gym, errands, short walks after meals).
+          </span></li>
+          <li><span class="time-tag">Vegan days</span><span class="label-text">
+            On Wed/Fri, make sure total protein hits at least <strong>140–150 g</strong> by adding 10–20 g extra plant protein (extra scoop or more ful/shiro/misir).
+          </span></li>
+        </ul>
+      </div>
+    </div>
+    <div class="cards" id="planCards">
+      <!-- generated from JS weeklyPlan -->
+    </div>
+  </section>
+
+  <!-- FOOD / GROCERIES -->
+  <section id="food">
+    <div class="cards">
+      <div class="card">
+        <h2>Weekly Food Overview<span class="chip">Shopping Guide</span></h2>
+        <p class="muted">
+          One week of food for this plan. Quantities are for 1 person following all meals. Adjust if you share meals or eat more/less.
+        </p>
+        <ul class="checklist">
+          <li><span class="time-tag">Protein</span><span class="label-text">Average per day ≈ <strong>150–170 g protein</strong> from eggs, chicken, beef, fish, ful, shiro, misir, and whey/plant protein.</span></li>
+          <li><span class="time-tag">Carbs</span><span class="label-text">Mostly from <strong>teff injera, sweet potato, oats, quinoa, barley (kolo), fruit</strong>. Fits ≈ 2,200–2,400 kcal/day.</span></li>
+          <li><span class="time-tag">Fats</span><span class="label-text">Healthy fats from <strong>avocado, nuts, seeds, olive/flax oil</strong> plus small amounts from meat/eggs.</span></li>
+          <li><span class="time-tag">Prep</span><span class="label-text">Use <strong>Sunday</strong> to cook big pots of shiro/misir/kik, grill meat, and bake/store enough injera for the week.</span></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Local market / suq<span class="chip">Fresh & staples</span></h2>
+        <ul class="checklist" id="localGroceriesList"></ul>
+      </div>
+
+      <div class="card">
+        <h2>Supermarket & pharmacy<span class="chip">Packaged</span></h2>
+        <ul class="checklist" id="superGroceriesList"></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- SETTINGS -->
+  <section id="settings">
+    <div class="cards">
+      <div class="card">
+        <h2>Your Stats<span class="chip">Personal</span></h2>
+        <p class="muted">
+          Used only to estimate calories & macros and track program weeks.
+        </p>
+        <div class="inputs-row">
+          <label>
+            Age (years)
+            <input type="number" id="setAge" min="10" max="80">
+          </label>
+          <label>
+            Gender
+            <select id="setGender">
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+            </select>
+          </label>
+          <label>
+            Height (cm)
+            <input type="number" id="setHeight" min="120" max="230">
+          </label>
+          <label>
+            Weight (kg)
+            <input type="number" id="setWeight" step="0.1" min="30" max="200">
+          </label>
+        </div>
+        <div class="inputs-row">
+          <label>
+            Activity factor
+            <select id="setActivity">
+              <option value="1.4">Light (3–4 small sessions/week)</option>
+              <option value="1.6">Moderate / You (5–6 hard sessions/week)</option>
+              <option value="1.8">Very high (athlete/manual labor)</option>
+            </select>
+          </label>
+          <label>
+            Program start date
+            <input type="date" id="setStartDate">
+          </label>
+          <label>
+            Goal duration (weeks)
+            <input type="number" id="setTargetWeeks" min="4" max="200">
+          </label>
+          <label>
+            Target weight (kg)
+            <input type="number" id="setTargetWeight" step="0.1" min="40" max="150">
+          </label>
+        </div>
+
+        <!-- THEME SELECTOR (Feature #5) -->
+        <div class="inputs-row">
+          <label>
+            Theme
+            <select id="themeSelect">
+              <option value="dark">Dark (default)</option>
+              <option value="light">Light</option>
+              <option value="bunna">Bunna mode (warm)</option>
+            </select>
+          </label>
+        </div>
+
+        <button class="primary" id="saveSettingsBtn">Save settings</button>
+      </div>
+
+      <div class="card">
+        <h2>Estimated Targets<span class="chip">Guide</span></h2>
+        <div id="macroSummary" class="muted">
+          <!-- filled by JS -->
+        </div>
+        <p class="muted" style="margin-top:8px;">
+          These are estimates. Your Ethiopian‑based meal plan (injera, ful, shiro, misir, chicken, beef, fish) is already close – adjust carbs/fats up or down based on progress.
+        </p>
+      </div>
+
+      <!-- EXPORT / IMPORT (Feature #6) -->
+      <div class="card">
+        <h2>Data & Backup<span class="chip">Export / Import</span></h2>
+        <p class="muted">
+          Export all your data (settings, checklists, logs, groceries) to a JSON file, or import it on another device.
+        </p>
+        <div class="inputs-row">
+          <button class="primary" id="exportDataBtn">Export data (JSON)</button>
+          <div class="import-wrapper">
+            <button class="outline" id="importDataBtn">Import data</button>
+            <input type="file" id="importFileInput" accept="application/json" hidden>
+          </div>
+        </div>
+        <p class="muted" id="importStatus"></p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Main JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="main.js"></script>
+<!-- Service worker registration for PWA (Feature #6) -->
+<script src="sw-register.js"></script>
+</body>
+</html>

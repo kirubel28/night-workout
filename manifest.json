@@ -1,0 +1,23 @@
+{
+  "name": "Night Workout – 18‑Month Cut",
+  "short_name": "NightWorkout",
+  "description": "Ethiopian‑style night workout planner, nutrition and fat‑loss tracker for the 18‑month road to ~8% body fat.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#020617",
+  "theme_color": "#020617",
+  "icons": [
+    {
+      "src": "icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
